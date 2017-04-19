@@ -1,0 +1,50 @@
+import simplegui
+minute=0
+second=0
+counter=0
+player=0
+computer=0
+def tick():
+    global counter
+    counter+=1
+    
+def draw(canvas):
+    global hour, minute, second, player, computer
+    second=counter//10
+    minute=second//60
+    tens=second//10
+    ones=second%10
+    time=str(minute)+':'+str(tens%6)+str(ones%60)+'.'+str(counter%10)
+    canvas.draw_text(time, [50,112], 48, "White")
+    score=str(player)+'/'+str(computer)
+    canvas.draw_text(score, [250,30], 30, "White")
+
+def click():
+    global counter
+    timer.start()
+    
+def stop():
+    global player, computer
+    timer.stop()
+    zero=counter%10
+    if zero==0:
+        player=player+1
+    elif zero!=0:
+        computer=computer+1
+    else:
+        print 'Error'
+        
+        
+    
+def reset():
+    global counter
+    counter=0
+    
+frame = simplegui.create_frame("Home", 300, 200)
+timer = simplegui.create_timer(100, tick)
+frame.set_draw_handler(draw)
+frame.add_button("Start", click)
+frame.add_button("Stop", stop)
+frame.add_button("Reset", reset)
+# Start the frame animation
+frame.start()
